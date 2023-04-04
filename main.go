@@ -33,6 +33,15 @@ func setupRouter() *gin.Engine {
 		routers.ResponseOK(ctx, logs)
 	})
 
+	appRouter.GET("/planos/:id/:mes", func(ctx *gin.Context) {
+		//Pegar o nome do plano e o mes solicitado no banco
+		idPlano := ctx.Param("id")
+		meses := ctx.Param("mes")
+
+		routers.GetPlano(idPlano, meses, ctx, logs, dynamoClient)
+
+	})
+
 	return appRouter
 }
 
