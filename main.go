@@ -39,7 +39,6 @@ func setupRouter() *gin.Engine {
 		meses := ctx.Param("mes")
 
 		routers.GetPlano(idPlano, meses, ctx, logs, dynamoClient)
-
 	})
 
 	return appRouter

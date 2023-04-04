@@ -10,9 +10,15 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 )
 
+type Plano struct {
+	Plano   string  `json:"Plano"`
+	Duracao string  `json:"Duracao"`
+	Valor   float32 `json:"Valor"`
+}
+
 // Pega o valor do plano com base no nome e duraçao
 func SelectPunch(idPlano string, meses string, dynamoClient dynamodb.Client, log configuration.Logfile) float32 {
-	var valorPlano float32
+	var plano Plano
 
 	//Monta a query com o nome do plano e a duraç~ao em meses
 	query := expression.And(
@@ -38,9 +44,9 @@ func SelectPunch(idPlano string, meses string, dynamoClient dynamodb.Client, log
 	configuration.Check(err, log)
 
 	for _, i := range result.Items {
-		err = attributevalue.UnmarshalMap(i, &valorPlano)
+		err = attributevalue.UnmarshalMap(i, &plano)
 		configuration.Check(err, log)
 	}
 
-	return valorPlano
+	return plano.Valor
 }
