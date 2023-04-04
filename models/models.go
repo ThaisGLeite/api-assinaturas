@@ -1,15 +1,15 @@
 package models
 
 type Plano struct {
-	Plano   string  `json:"Plano"`
-	Duracao string  `json:"Duracao"`
-	Valor   float32 `json:"Valor"`
+	Plano   string  `json:"plano"`
+	Duracao string  `json:"duracao"`
+	Valor   float32 `json:"valor"`
 }
 
 type Assinante struct {
-	Nome       string `json:"Nome"`
-	SobreNome  string `json:"SobreNome"`
-	Plano      string `json:"Plano"`
-	Validade   string `json:"Validade"`
-	DataInicio string `json:"DataInicio"`
+	Nome       string `json:"nome"`
+	SobreNome  string `json:"sobrenome"`
+	Plano      string `json:"plano"`
+	Validade   string `json:"validade"`
+	DataInicio string `json:"datainicio"`
 }

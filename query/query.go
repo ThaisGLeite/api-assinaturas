@@ -82,11 +82,11 @@ func SelectValidadePlano(nome string, sobrenome string, dynamoClient dynamodb.Cl
 
 // Cadastro de um novo cliente
 func InsertAssinante(assinante models.Assinante, dynamoClient dynamodb.Client, log configuration.Logfile) {
-	av, err := attributevalue.MarshalMap(assinante)
+	item, err := attributevalue.MarshalMap(assinante)
 	configuration.Check(err, log)
 
 	input := &dynamodb.PutItemInput{
-		Item:      av,
+		Item:      item,
 		TableName: aws.String("Assinantes"),
 	}
 

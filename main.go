@@ -3,6 +3,7 @@ package main
 import (
 	"assinatura-api/configuration"
 	"assinatura-api/driver"
+	"assinatura-api/models"
 	"assinatura-api/routers"
 	"log"
 	"net/http"
@@ -50,11 +51,10 @@ func setupRouter() *gin.Engine {
 
 	appRouter.POST("/novaassinatura", func(ctx *gin.Context) {
 		//Criar um novo assinante
-		nome := ctx.PostForm("nome")
-		sobrenome := ctx.PostForm("sobrenome")
-		plano := ctx.PostForm("plano")
-		validade := ctx.PostForm("validade")
-		routers.PostAssinante(nome, sobrenome, plano, validade, ctx, logs, dynamoClient)
+		var assinante models.Assinante
+		err := ctx.BindJSON(&assinante)
+		configuration.Check(err, logs)
+		routers.PostAssinante(assinante, ctx, logs, dynamoClient)
 	})
 
 	return appRouter

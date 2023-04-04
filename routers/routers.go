@@ -43,16 +43,7 @@ func GetAssinatura(nome string, sobrenome string, c *gin.Context, log configurat
 	c.IndentedJSON(http.StatusOK, status)
 }
 
-func PostAssinante(nome string, sobrenome string, plano string, validade string, c *gin.Context, log configuration.Logfile, dynamoClient *dynamodb.Client) {
-	//Criar um assinante novo
-	assinante := models.Assinante{
-		Nome:       nome,
-		SobreNome:  sobrenome,
-		Plano:      plano,
-		Validade:   validade,
-		DataInicio: time.Now().UTC().Format("2006-01-02"),
-	}
-
+func PostAssinante(assinante models.Assinante, c *gin.Context, log configuration.Logfile, dynamoClient *dynamodb.Client) {
 	//Vai la no banco gravar o plano de assinatura do cliente
 	query.InsertAssinante(assinante, *dynamoClient, log)
 	c.IndentedJSON(http.StatusOK, "Assinante criado com sucesso")
