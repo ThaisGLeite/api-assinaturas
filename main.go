@@ -41,6 +41,22 @@ func setupRouter() *gin.Engine {
 		routers.GetPlano(idPlano, meses, ctx, logs, dynamoClient)
 	})
 
+	appRouter.GET("/assinatura/:nome/:sobrenome", func(ctx *gin.Context) {
+		//Pegar o plano de assinatura do cliente
+		nome := ctx.Param("nome")
+		sobrenome := ctx.Param("sobrenome")
+		routers.GetAssinatura(nome, sobrenome, ctx, logs, dynamoClient)
+	})
+
+	appRouter.POST("/novaassinatura", func(ctx *gin.Context) {
+		//Criar um novo assinante
+		nome := ctx.PostForm("nome")
+		sobrenome := ctx.PostForm("sobrenome")
+		plano := ctx.PostForm("plano")
+		validade := ctx.PostForm("validade")
+		routers.PostAssinante(nome, sobrenome, plano, validade, ctx, logs, dynamoClient)
+	})
+
 	return appRouter
 }
 
