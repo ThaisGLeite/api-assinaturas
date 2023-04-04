@@ -61,7 +61,7 @@ func setupRouter() *gin.Engine {
 }
 
 // Para compilar o binario do sistema usamos: GOOS=linux GOARCH=amd64 go build -o assinatura-api .
-// para criar o zip do projeto comando: zip lambda.zip assinatura-app
+// para criar o zip do projeto comando: zip lambda.zip assinatura-api
 func main() {
 	InfoLogger := log.New(os.Stdout, " ", log.LstdFlags|log.Lshortfile)
 	ErrorLogger := log.New(os.Stdout, " ", log.LstdFlags|log.Lshortfile)
