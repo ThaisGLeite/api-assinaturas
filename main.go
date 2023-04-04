@@ -2,11 +2,15 @@ package main
 
 import (
 	"assinatura-api/configuration"
+	"assinatura-api/driver"
+	"assinatura-api/routers"
 	"log"
 	"net/http"
 	"os"
 
+	"github.com/apex/gateway"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
+	"github.com/gin-gonic/gin"
 )
 
 var (
@@ -19,6 +23,17 @@ func inLambda() bool {
 		return true
 	}
 	return false
+}
+
+func setupRouter() *gin.Engine {
+
+	appRouter := gin.New()
+	appRouter.GET("/", func(ctx *gin.Context) {
+		logs.InfoLogger.Println("Servidor Ok")
+		routers.ResponseOK(ctx, logs)
+	})
+
+	return appRouter
 }
 
 // Para compilar o binario do sistema usamos: GOOS=linux GOARCH=amd64 go build -o assinatura-api .
