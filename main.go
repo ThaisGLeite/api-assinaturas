@@ -49,6 +49,11 @@ func setupRouter() *gin.Engine {
 		routers.GetAssinatura(nome, sobrenome, ctx, logs, dynamoClient)
 	})
 
+	appRouter.GET("/assinaturas", func(ctx *gin.Context) {
+		//Pegar o nome de todos os assinantes
+		routers.GetAssinantes(ctx, logs, dynamoClient)
+	})
+
 	appRouter.POST("/novaassinatura", func(ctx *gin.Context) {
 		//Criar um novo assinante
 		var assinante models.Assinante
