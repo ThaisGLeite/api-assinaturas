@@ -101,27 +101,8 @@ func SelectAssinantes(dynamoClient dynamodb.Client, log configuration.Logfile) [
 	}
 	result, err := dynamoClient.Scan(context.Background(), input)
 	configuration.Check(err, log)
-
-	// Unmarshal the result Items field into a slice of maps
-	items := make([]map[string]interface{}, 0)
-	for _, item := range result.Items {
-		itemMap := make(map[string]interface{})
-		err := attributevalue.UnmarshalMap(item, &itemMap)
-		configuration.Check(err, log)
-		items = append(items, itemMap)
-	}
-
-	assinantes := make([]models.Assinante, 0)
-	for _, item := range items {
-		assinante := models.Assinante{
-			Nome:       item["nome"].(string),
-			SobreNome:  item["sobrenome"].(string),
-			Plano:      item["plano"].(string),
-			Validade:   item["validade"].(string),
-			DataInicio: item["datainicio"].(string),
-		}
-		assinantes = append(assinantes, assinante)
-	}
-
+	var assinantes []models.Assinante
+	err = attributevalue.UnmarshalListOfMaps(result.Items, &assinantes)
+	configuration.Check(err, log)
 	return assinantes
 }
